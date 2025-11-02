@@ -1,8 +1,15 @@
 {
   "name": "@agrodt/gitlab-cicq",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Run ESLint and TypeScript in GitLab CI pipelines and generate a single code quality report.",
-  "keywords": ["gitlab", "eslint", "typescript", "code-quality", "ci", "codeclimate"],
+  "keywords": [
+    "gitlab",
+    "eslint",
+    "typescript",
+    "code-quality",
+    "ci",
+    "codeclimate"
+  ],
   "author": "Petr Tsymbarovich <petr@tsymbarovich.ru>",
   "license": "MIT",
   "type": "module",
