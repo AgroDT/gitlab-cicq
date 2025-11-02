@@ -1,0 +1,69 @@
+name: Auto tag and publish to npmjs.com
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  tag:
+    name: Create tag on version bump
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    outputs:
+      new_tag: ${{ steps.tag.outputs.new_tag }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - id: pkg
+        run: echo "version=$(jq -r .version package.json)" >> "$GITHUB_OUTPUT"
+
+      - id: tag
+        run: |
+          version="${{ steps.pkg.outputs.version }}"
+          if git rev-parse "v$version" >/dev/null 2>&1; then
+            echo "new_tag=" >> "$GITHUB_OUTPUT"
+            echo "Tag v$version already exists."
+          else
+            git tag "v$version"
+            git push origin "v$version"
+            echo "new_tag=v$version" >> "$GITHUB_OUTPUT"
+            echo "Created tag v$version"
+          fi
+
+  publish:
+    name: Publish to npm
+    needs: tag
+    if: needs.tag.outputs.new_tag != ''
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          registry-url: 'https://registry.npmjs.org/'
+          cache: pnpm
+
+      - run: pnpm install
+      - run: pnpm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
