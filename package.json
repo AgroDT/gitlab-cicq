@@ -1,0 +1,59 @@
+{
+  "name": "@agrodt/gitlab-cicq",
+  "version": "0.1.0",
+  "description": "Run ESLint and TypeScript in GitLab CI pipelines and generate a single code quality report.",
+  "keywords": ["gitlab", "eslint", "typescript", "code-quality", "ci", "codeclimate"],
+  "author": "Petr Tsymbarovich <petr@tsymbarovich.ru>",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AgroDT/gitlab-cicq.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AgroDT/gitlab-cicq/issues"
+  },
+  "homepage": "https://github.com/AgroDT/gitlab-cicq",
+  "scripts": {
+    "build": "tsc",
+    "check": "stc --noEmit",
+    "lint": "eslint",
+    "prepare": "tsc"
+  },
+  "files": [
+    "dist"
+  ],
+  "bin": {
+    "gitlab-cicq": "./dist/cli.js"
+  },
+  "dependencies": {
+    "commander": "^14.0.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.0",
+    "@stylistic/eslint-plugin": "^5.5.0",
+    "@types/node": "^24.9.2",
+    "codeclimate-types": "^0.3.1",
+    "eslint": "^9.39.0",
+    "eslint-plugin-import": "^2.32.0",
+    "globals": "^16.5.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.2"
+  },
+  "peerDependencies": {
+    "eslint": "^9.38.0",
+    "typescript": "^5.9.3"
+  },
+  "peerDependenciesMeta": {
+    "eslint": {
+      "optional": true
+    },
+    "typescript": {
+      "optional": true
+    }
+  },
+  "packageManager": "pnpm@10.20.0+sha512.cf9998222162dd85864d0a8102e7892e7ba4ceadebbf5a31f9c2fce48dfce317a9c53b9f6464d1ef9042cba2e02ae02a9f7c143a2b438cd93c91840f0192b9dd"
+}
