@@ -23,13 +23,7 @@ automated code quality reporting.
 Install as a dev dependency:
 
 ```sh
-npm install -D gitlab-cicq
-```
-
-Or run without adding to the project:
-
-```sh
-npx gitlab-cicq [options]
+npm install -D @agrodt/gitlab-cicq
 ```
 
 ## Usage
@@ -71,6 +65,7 @@ Add the generated codequality.json report to your GitLab pipeline:
 code_quality:
   stage: test
   script:
+    - npm install
     - gitlab-cicq --eslint --typescript
   artifacts:
     reports:
