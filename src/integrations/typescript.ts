@@ -44,25 +44,48 @@ function runTsCheckWorker(projectDir: string): GitLabCQIssue[] {
   const issues: GitLabCQIssue[] = [];
 
   for (const {file, start = 0, code, messageText, category} of diagnostics) {
-    if (file) {
-      const filePath = path.normalize(`${projectDir}/${file.fileName}`);
-      const {line, character} = ts.getLineAndCharacterOfPosition(file, start);
-      const fingerprint = generateFingerprint(filePath, line, character, code);
+    const {fileName, line, character} = getFileDetails(file, start, tsconfig);
+    const filePath = path.normalize(`${projectDir}/${fileName}`);
+    const fingerprint = generateFingerprint(filePath, line, character, code);
 
-      issues.push({
-        check_name: `TS${code}`,
-        description: ts.flattenDiagnosticMessageText(messageText, '\n'),
-        severity: category === ts.DiagnosticCategory.Error ? 'critical' : 'minor',
-        location: {
-          path: filePath,
-          lines: {begin: line},
-        },
-        fingerprint,
-      });
-    }
+    issues.push({
+      check_name: `TS${code}`,
+      description: ts.flattenDiagnosticMessageText(messageText, '\n'),
+      severity: category === ts.DiagnosticCategory.Error ? 'critical' : 'minor',
+      location: {
+        path: filePath,
+        lines: {begin: line},
+      },
+      fingerprint,
+    });
   }
 
   return issues;
+}
+
+function getFileDetails(
+  file: ts.SourceFile | undefined,
+  start: number,
+  tsconfig: string,
+): {
+  fileName: string
+  line: number
+  character: number
+} {
+  if (file) {
+    const {line, character} = ts.getLineAndCharacterOfPosition(file, start);
+    return {
+      fileName: file.fileName,
+      line,
+      character,
+    };
+  }
+
+  return {
+    fileName: tsconfig,
+    line: 0,
+    character: 0,
+  };
 }
 
 if (parentPort) {
