@@ -19,14 +19,7 @@ async function runESLint(patterns: string | string[]): Promise<GitLabCQIssue[]> 
     const filePath = path.relative(cwd, result.filePath);
 
     for (const message of result.messages) {
-      const {
-        column,
-        fatal,
-        line,
-        message: messageText,
-        ruleId,
-        severity,
-      } = message;
+      const {column, fatal, line, message: messageText, ruleId, severity} = message;
       issues.push({
         description: messageText,
         check_name: ruleId ?? '',
