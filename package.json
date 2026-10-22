@@ -1,13 +1,15 @@
 {
   "name": "@agrodt/gitlab-cicq",
   "version": "1.1.0",
-  "description": "Run ESLint and TypeScript in GitLab CI pipelines and generate a single code quality report.",
+  "description": "Run ESLint, TypeScript, Oxlint, and Oxfmt in GitLab CI pipelines and generate a single code quality report.",
   "keywords": [
     "ci",
     "code-quality",
     "codeclimate",
     "eslint",
     "gitlab",
+    "oxfmt",
+    "oxlint",
     "typescript"
   ],
   "homepage": "https://github.com/AgroDT/gitlab-cicq",
@@ -47,10 +49,18 @@
   },
   "peerDependencies": {
     "eslint": "^9.38.0 || ^10.0.0",
+    "oxfmt": "^0.74.0",
+    "oxlint": "^1.89.0",
     "typescript": "^5.9.3 || ^6.0.0 || ^7.0.0"
   },
   "peerDependenciesMeta": {
     "eslint": {
+      "optional": true
+    },
+    "oxfmt": {
+      "optional": true
+    },
+    "oxlint": {
       "optional": true
     },
     "typescript": {
