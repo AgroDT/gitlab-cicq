@@ -11,12 +11,19 @@ automated code quality reporting.
 - Run TypeScript type checks on specified directories.
 - Generate a single GitLab-compatible Code Quality report.
 - Configurable output path for reports.
-- Optional `--exit-0` mode to prevent failing CI pipelines.
+- Optional `--exit-0` mode to return a successful exit code when checks find issues.
 
 ## Requirements
 
-- **Node.js** >= 22
-- Optional: ESLint and TypeScript (if using `--eslint` or `--typescript`)
+- **Node.js** >= 24
+- Optional: ESLint 9.38+ or 10 with flat config (if using `--eslint`)
+- Optional: TypeScript 5.9.3+, 6, or 7 (if using `--typescript`)
+
+TypeScript checks run the compiler installed in the checked project without
+emitting files or changing its incremental build cache. Each project directory
+is checked using its nearest `tsconfig.json`, searching parent directories if
+needed. If no configuration is found, the tool prints a warning and skips the
+TypeScript check for that directory.
 
 ## Installation
 
@@ -26,6 +33,15 @@ Install as a dev dependency:
 npm install -D @agrodt/gitlab-cicq
 ```
 
+Install ESLint and/or TypeScript in your project for the corresponding checks.
+For example, to use both:
+
+```sh
+npm install -D eslint typescript
+```
+
+ESLint checks also require a flat configuration file such as `eslint.config.js`.
+
 ## Usage
 
 ### Options
@@ -33,7 +49,7 @@ npm install -D @agrodt/gitlab-cicq
 Run the CLI with the --help option to see available commands:
 
 ```
-$ gitlab-cicq --help
+$ npx gitlab-cicq --help
 
 Usage: gitlab-cicq [options]
 
@@ -48,25 +64,31 @@ Options:
   -h, --help                  display help for command
 ```
 
+The `--exit-0` option returns exit code 0 when checks complete and report issues.
+It does not suppress failures such as missing dependencies, ESLint configuration
+errors, compiler crashes, or an unwritable report path.
+
 ### Example
 
 Run ESLint on the `src` directory and TypeScript checks in the current
 directory:
 
 ```sh
-gitlab-cicq --eslint src --typescript --output reports/codequality.json
+npx gitlab-cicq --eslint src --typescript --output codequality.json
 ```
 
 ## Integration in CI/CD
 
-Add the generated codequality.json report to your GitLab pipeline:
+With the tool, ESLint, and TypeScript installed as project dependencies, add the
+generated codequality.json report to your GitLab pipeline:
 
 ```yaml
 code_quality:
+  image: node:24
   stage: test
   script:
     - npm install
-    - gitlab-cicq --eslint --typescript
+    - npx gitlab-cicq --eslint --typescript
   artifacts:
     reports:
       codequality: codequality.json
