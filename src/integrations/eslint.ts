@@ -1,6 +1,6 @@
 import * as path from 'node:path';
 
-import {loadESLint} from 'eslint';
+import {ESLint} from 'eslint';
 
 import type {GitLabCQIssue} from '../types.js';
 
@@ -9,7 +9,6 @@ import {generateFingerprint} from './util.js';
 async function runESLint(patterns: string | string[]): Promise<GitLabCQIssue[]> {
   const cwd = process.cwd();
 
-  const ESLint = await loadESLint({useFlatConfig: true});
   const eslint = new ESLint({cwd, fix: false});
   const results = await eslint.lintFiles(patterns);
 

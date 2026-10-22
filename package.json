@@ -35,19 +35,19 @@
     "prepare": "tsc"
   },
   "dependencies": {
-    "commander": "^14.0.2"
+    "commander": "^15.0.0"
   },
   "devDependencies": {
-    "@types/node": "^24.9.2",
+    "@types/node": "^24.19.2",
     "codeclimate-types": "^0.3.1",
-    "eslint": "^9.39.0",
+    "eslint": "^10.13.0",
     "oxfmt": "^0.74.0",
     "oxlint": "^1.89.0",
-    "typescript": "^5.9.3"
+    "typescript": "^7.0.2"
   },
   "peerDependencies": {
-    "eslint": "^9.38.0",
-    "typescript": "^5.9.3"
+    "eslint": "^9.38.0 || ^10.0.0",
+    "typescript": "^5.9.3 || ^6.0.0 || ^7.0.0"
   },
   "peerDependenciesMeta": {
     "eslint": {
@@ -58,7 +58,7 @@
     }
   },
   "engines": {
-    "node": ">=22"
+    "node": ">=24"
   },
   "packageManager": "pnpm@12.15.0+sha512.b3951d6d6ff4a9f13dc7cf56cd28d2b8eb37dbcc9c68e52e1e1191873ea9f82a017287ab50baadc5ccc494f036c67c0e47eb13608c2fa36f47711b61ea128e61"
 }
