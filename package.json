@@ -3,52 +3,47 @@
   "version": "1.1.0",
   "description": "Run ESLint and TypeScript in GitLab CI pipelines and generate a single code quality report.",
   "keywords": [
-    "gitlab",
-    "eslint",
-    "typescript",
-    "code-quality",
     "ci",
-    "codeclimate"
+    "code-quality",
+    "codeclimate",
+    "eslint",
+    "gitlab",
+    "typescript"
   ],
-  "author": "Petr Tsymbarovich <petr@tsymbarovich.ru>",
-  "license": "MIT",
-  "type": "module",
-  "engines": {
-    "node": ">=22"
+  "homepage": "https://github.com/AgroDT/gitlab-cicq",
+  "bugs": {
+    "url": "https://github.com/AgroDT/gitlab-cicq/issues"
   },
+  "license": "MIT",
+  "author": "Petr Tsymbarovich <petr@tsymbarovich.ru>",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AgroDT/gitlab-cicq.git"
   },
-  "bugs": {
-    "url": "https://github.com/AgroDT/gitlab-cicq/issues"
-  },
-  "homepage": "https://github.com/AgroDT/gitlab-cicq",
-  "scripts": {
-    "build": "tsc",
-    "check": "stc --noEmit",
-    "lint": "eslint",
-    "prepare": "tsc"
+  "bin": {
+    "gitlab-cicq": "./dist/cli.js"
   },
   "files": [
     "dist"
   ],
-  "bin": {
-    "gitlab-cicq": "./dist/cli.js"
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "check": "tsc --noEmit",
+    "fmt": "oxfmt",
+    "lint": "oxlint",
+    "prepare": "tsc"
   },
   "dependencies": {
     "commander": "^14.0.2"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.0",
-    "@stylistic/eslint-plugin": "^5.5.0",
     "@types/node": "^24.9.2",
     "codeclimate-types": "^0.3.1",
     "eslint": "^9.39.0",
-    "eslint-plugin-import": "^2.32.0",
-    "globals": "^16.5.0",
-    "typescript": "^5.9.3",
-    "typescript-eslint": "^8.46.2"
+    "oxfmt": "^0.74.0",
+    "oxlint": "^1.89.0",
+    "typescript": "^5.9.3"
   },
   "peerDependencies": {
     "eslint": "^9.38.0",
@@ -62,5 +57,8 @@
       "optional": true
     }
   },
-  "packageManager": "pnpm@10.20.0+sha512.cf9998222162dd85864d0a8102e7892e7ba4ceadebbf5a31f9c2fce48dfce317a9c53b9f6464d1ef9042cba2e02ae02a9f7c143a2b438cd93c91840f0192b9dd"
+  "engines": {
+    "node": ">=22"
+  },
+  "packageManager": "pnpm@12.15.0+sha512.b3951d6d6ff4a9f13dc7cf56cd28d2b8eb37dbcc9c68e52e1e1191873ea9f82a017287ab50baadc5ccc494f036c67c0e47eb13608c2fa36f47711b61ea128e61"
 }

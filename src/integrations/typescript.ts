@@ -68,9 +68,9 @@ function getFileDetails(
   start: number,
   tsconfig: string,
 ): {
-  fileName: string
-  line: number
-  character: number
+  fileName: string;
+  line: number;
+  character: number;
 } {
   if (file) {
     const {line, character} = ts.getLineAndCharacterOfPosition(file, start);
