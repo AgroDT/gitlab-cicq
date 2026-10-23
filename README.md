@@ -1,7 +1,7 @@
 # GitLab CICQ
 
 **GitLab CICQ** is a command-line tool that runs **ESLint**, **TypeScript**,
-**Oxlint**, and **Oxfmt** checks and generates a single [GitLab Code Quality](https://docs.gitlab.com/ci/testing/code_quality/)
+**Oxlint**, **Oxfmt**, and **Biome** checks and generates a single [GitLab Code Quality](https://docs.gitlab.com/ci/testing/code_quality/)
 report in JSON format. It integrates easily into GitLab CI/CD pipelines for
 automated code quality reporting.
 
@@ -11,6 +11,7 @@ automated code quality reporting.
 - Run TypeScript type checks on specified directories.
 - Run Oxlint checks with optional file and directory paths.
 - Run Oxfmt formatting without modifying files.
+- Run Biome checks with optional file and directory paths.
 - Generate a single GitLab-compatible Code Quality report.
 - Configurable output path for reports.
 - Optional `--exit-0` mode to return a successful exit code when checks find issues.
@@ -22,6 +23,7 @@ automated code quality reporting.
 - Optional: TypeScript 5.9.3+, 6, or 7 (if using `--typescript`)
 - Optional: Oxlint 1.89+ within version 1.x (if using `--oxlint`)
 - Optional: Oxfmt 0.74.x (if using `--oxfmt`)
+- Optional: Biome 2.6.2+ within version 2.x (if using `--biome`)
 
 TypeScript checks run the compiler installed in the checked project without
 emitting files or changing its incremental build cache. Each project directory
@@ -52,6 +54,12 @@ To use the Oxc integrations, install their tools in your project:
 npm install -D oxlint oxfmt
 ```
 
+To use Biome, install it in your project:
+
+```sh
+npm install -D @biomejs/biome
+```
+
 Each integration only requires its own tool. You can select any combination of
 checks.
 
@@ -66,7 +74,7 @@ $ npx gitlab-cicq --help
 
 Usage: gitlab-cicq [options]
 
-Run ESLint, TypeScript, Oxlint, and Oxfmt checks and output GitLab Code Quality report
+Run ESLint, TypeScript, Oxlint, Oxfmt, and Biome checks and output GitLab Code Quality report
 
 Options:
   -V, --version               output the version number
@@ -74,6 +82,7 @@ Options:
   -t, --typescript [dirs...]  run TypeScript checks (defaults to current directory when no dirs are given)
   -l, --oxlint [paths...]     run Oxlint (defaults to current directory when no paths are given)
   -f, --oxfmt [paths...]      run Oxfmt (defaults to current directory when no paths are given)
+  -b, --biome [paths...]      run Biome (defaults to current directory when no paths are given)
   -o, --output <path>         report path (default: "codequality.json")
   --exit-0                    always exit with 0 (default: false)
   -h, --help                  display help for command
@@ -81,7 +90,7 @@ Options:
 
 The `--exit-0` option returns exit code 0 when checks complete and report issues.
 It does not suppress failures such as missing dependencies, ESLint configuration
-errors, TypeScript compiler crashes, invalid Oxlint or Oxfmt configurations,
+errors, TypeScript compiler crashes, invalid Oxlint, Oxfmt, or Biome configurations,
 Oxfmt parsing errors, or an unwritable report path.
 
 ### Example

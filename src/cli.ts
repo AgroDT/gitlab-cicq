@@ -11,6 +11,7 @@ interface OptionValues {
   typescript?: true | string[];
   oxlint?: true | string[];
   oxfmt?: true | string[];
+  biome?: true | string[];
   output: string;
   exit0: boolean;
 }
@@ -21,10 +22,10 @@ const {version} = await fs
   .readFile(fileURLToPath(import.meta.resolve('../package.json')), {encoding: 'utf-8'})
   .then((buf) => JSON.parse(buf));
 
-const {eslint, output, typescript, oxlint, oxfmt, exit0} = program
+const {eslint, output, typescript, oxlint, oxfmt, biome, exit0} = program
   .name('gitlab-cicq')
   .description(
-    'Run ESLint, TypeScript, Oxlint, and Oxfmt checks and output GitLab Code Quality report',
+    'Run ESLint, TypeScript, Oxlint, Oxfmt, and Biome checks and output GitLab Code Quality report',
   )
   .version(version)
   .option(
@@ -43,13 +44,17 @@ const {eslint, output, typescript, oxlint, oxfmt, exit0} = program
     '-f, --oxfmt [paths...]',
     'run Oxfmt (defaults to current directory when no paths are given)',
   )
+  .option(
+    '-b, --biome [paths...]',
+    'run Biome (defaults to current directory when no paths are given)',
+  )
   .option('-o, --output <path>', 'report path', 'codequality.json')
   .option('--exit-0', 'always exit with 0', false)
   .parse()
   .opts<OptionValues>();
 
-if (!eslint && !typescript && !oxlint && !oxfmt) {
-  program.error('Specify at least one of --eslint, --typescript, --oxlint, or --oxfmt');
+if (!eslint && !typescript && !oxlint && !oxfmt && !biome) {
+  program.error('Specify at least one of --eslint, --typescript, --oxlint, --oxfmt, or --biome');
 }
 
 const integrationMock: IntegrationFunc<never> = async () => [];
@@ -70,11 +75,12 @@ async function loadIntegration<Args, I = IntegrationFunc<Args>>(
   return integrationMock as I;
 }
 
-const [runESLint, runTsCheck, runOxlint, runOxfmt] = await Promise.all([
+const [runESLint, runTsCheck, runOxlint, runOxfmt, runBiome] = await Promise.all([
   loadIntegration(!!eslint, () => import('./integrations/eslint.js')),
   loadIntegration(!!typescript, () => import('./integrations/typescript.js')),
   loadIntegration(!!oxlint, () => import('./integrations/oxlint.js')),
   loadIntegration(!!oxfmt, () => import('./integrations/oxfmt.js')),
+  loadIntegration(!!biome, () => import('./integrations/biome.js')),
 ]);
 
 const issues = (
@@ -83,6 +89,7 @@ const issues = (
     ...(Array.isArray(typescript) ? typescript : ['.']).map(runTsCheck),
     runOxlint(Array.isArray(oxlint) ? oxlint : '.'),
     runOxfmt(Array.isArray(oxfmt) ? oxfmt : '.'),
+    runBiome(Array.isArray(biome) ? biome : '.'),
   ])
 ).flat();
 
