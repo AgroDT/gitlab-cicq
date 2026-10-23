@@ -1,8 +1,9 @@
 {
   "name": "@agrodt/gitlab-cicq",
   "version": "1.1.0",
-  "description": "Run ESLint, TypeScript, Oxlint, and Oxfmt in GitLab CI pipelines and generate a single code quality report.",
+  "description": "Run ESLint, TypeScript, Oxlint, Oxfmt, and Biome in GitLab CI pipelines and generate a single code quality report.",
   "keywords": [
+    "biome",
     "ci",
     "code-quality",
     "codeclimate",
@@ -40,6 +41,7 @@
     "commander": "^15.0.0"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.6.2",
     "@types/node": "^24.19.2",
     "codeclimate-types": "^0.3.1",
     "eslint": "^10.13.0",
@@ -48,12 +50,16 @@
     "typescript": "^7.0.2"
   },
   "peerDependencies": {
+    "@biomejs/biome": "^2.6.2",
     "eslint": "^9.38.0 || ^10.0.0",
     "oxfmt": "^0.74.0",
     "oxlint": "^1.89.0",
     "typescript": "^5.9.3 || ^6.0.0 || ^7.0.0"
   },
   "peerDependenciesMeta": {
+    "@biomejs/biome": {
+      "optional": true
+    },
     "eslint": {
       "optional": true
     },
