@@ -19,11 +19,11 @@ automated code quality reporting.
 ## Requirements
 
 - **Node.js** >= 24
-- Optional: ESLint 9.38+ or 10 with flat config (if using `--eslint`)
-- Optional: TypeScript 5.9.3+, 6, or 7 (if using `--typescript`)
-- Optional: Oxlint 1.89+ within version 1.x (if using `--oxlint`)
-- Optional: Oxfmt 0.74.x (if using `--oxfmt`)
-- Optional: Biome 2.6.2+ within version 2.x (if using `--biome`)
+- Optional: ESLint with flat config (if using `--eslint`)
+- Optional: TypeScript (if using `--typescript`)
+- Optional: Oxlint (if using `--oxlint`)
+- Optional: Oxfmt (if using `--oxfmt`)
+- Optional: Biome (if using `--biome`)
 
 TypeScript checks run the compiler installed in the checked project without
 emitting files or changing its incremental build cache. Each project directory

@@ -50,11 +50,11 @@
     "typescript": "^7.0.2"
   },
   "peerDependencies": {
-    "@biomejs/biome": "^2.6.2",
-    "eslint": "^9.38.0 || ^10.0.0",
-    "oxfmt": "^0.74.0",
-    "oxlint": "^1.89.0",
-    "typescript": "^5.9.3 || ^6.0.0 || ^7.0.0"
+    "@biomejs/biome": "*",
+    "eslint": "*",
+    "oxfmt": "*",
+    "oxlint": "*",
+    "typescript": "*"
   },
   "peerDependenciesMeta": {
     "@biomejs/biome": {
@@ -76,5 +76,5 @@
   "engines": {
     "node": ">=24"
   },
-  "packageManager": "pnpm@12.15.0+sha512.b3951d6d6ff4a9f13dc7cf56cd28d2b8eb37dbcc9c68e52e1e1191873ea9f82a017287ab50baadc5ccc494f036c67c0e47eb13608c2fa36f47711b61ea128e61"
+  "packageManager": "pnpm@12.21.0+sha512.66fd8278ee28935ce951792d34367ff3af5c432a2756445823029533835b8da529bbe0be5130afd56ed0713fb8789e47bad82d93bd5ae2fe54b15562d6276ef0"
 }
